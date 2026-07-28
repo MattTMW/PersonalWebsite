@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  */
 export function Experience() {
   return (
-    <Section id="experience" label="03 / Experience" title="Where I've worked">
+    <Section id="experience" index="03" label="Experience" title="Where I've worked">
       <ol className="relative border-l border-border">
         {experience.map((item, index) => (
           <li key={`${item.org}-${item.role}`} className="relative pb-12 pl-7 last:pb-0 sm:pl-9">

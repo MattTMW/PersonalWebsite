@@ -17,9 +17,9 @@ const channels = [
  */
 export function Contact() {
   return (
-    <Section id="contact" label="05 / Contact" title="Let's talk">
+    <Section id="contact" index="05" label="Contact" title="Let's talk">
       <Reveal>
-        <p className="mb-10 max-w-xl text-[1.0625rem] leading-relaxed text-muted">
+        <p className="measure mb-10 text-[1.0625rem] leading-relaxed text-muted">
           I&apos;m looking for software engineering internships, and I&apos;m always up for
           talking about a project you think is interesting. My inbox is genuinely open.
         </p>

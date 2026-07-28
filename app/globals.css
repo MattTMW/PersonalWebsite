@@ -119,6 +119,12 @@
   }
 }
 
+/* Prose measure. ~65 characters at our body size, which is the readability
+   sweet spot. Only text gets this — cards and media break out past it. */
+@utility measure {
+  max-width: 38rem;
+}
+
 @utility label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;

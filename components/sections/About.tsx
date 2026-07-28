@@ -9,8 +9,8 @@ import { about } from "@/lib/content";
  */
 export function About() {
   return (
-    <Section id="about" label="01 / About" title="A little context">
-      <div className="max-w-xl space-y-5">
+    <Section id="about" index="01" label="About" title="A little context">
+      <div className="measure space-y-5">
         {about.paragraphs.map((paragraph, index) => (
           <Reveal key={index} delay={index * 0.06}>
             <p className="text-[1.0625rem] leading-[1.75] text-muted">{paragraph}</p>

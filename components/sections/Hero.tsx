@@ -2,14 +2,16 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { SpiderMan } from "@/components/easter-eggs/SpiderMan";
 import { ArrowDown, ArrowRight, Mail } from "@/components/ui/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { about, site } from "@/lib/content";
 
 /**
- * The hero is the only place on the site with large type, and the only place
- * with a background wash. Both are spent here deliberately: one anchor moment,
- * then the page goes quiet and stays quiet.
+ * The hero is the only part of the page without the section rail, and the only
+ * place with large type and a background wash. That's deliberate: it reads as a
+ * different kind of thing from everything below it, which is where the page's
+ * compositional variety comes from.
  *
  * The parallax is 40px over a full viewport of scrolling — enough to feel like
  * depth, small enough that most people never consciously notice it.
@@ -29,16 +31,19 @@ export function Hero() {
   const status = about.facts.find((fact) => fact.label === "Status")?.value;
 
   return (
-    <section ref={ref} id="top" className="relative pt-10 pb-24 sm:pt-16 sm:pb-32">
+    <section ref={ref} id="top" className="relative pt-12 pb-24 sm:pt-20 sm:pb-32">
       {/* Soft accent wash. Sits behind the type at very low opacity — it should
           register as "the paper is slightly warm here", not as a gradient. */}
       <motion.div
         aria-hidden
-        style={
-          prefersReducedMotion ? undefined : { y: washY, opacity: washOpacity }
-        }
+        style={prefersReducedMotion ? undefined : { y: washY, opacity: washOpacity }}
         className="pointer-events-none absolute -top-24 -right-32 -z-10 size-[34rem] rounded-full bg-[radial-gradient(circle,var(--accent-soft)_0%,transparent_68%)] opacity-70 blur-2xl dark:opacity-40"
       />
+
+      {/* He hangs into the empty right-hand space — exactly the area the old
+          centred layout was wasting. Hidden on the narrowest screens, where
+          there's no spare room and he'd crowd the name. */}
+      <SpiderMan className="top-0 right-2 hidden sm:block lg:right-16" threadLength={64} />
 
       <motion.div
         data-reveal
@@ -56,26 +61,26 @@ export function Hero() {
           </p>
         )}
 
-        <h1 className="text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.04em] sm:text-6xl">
+        <h1 className="text-[2.75rem] leading-[1.02] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-7xl">
           {site.name}
         </h1>
 
-        <p className="mt-4 text-xl text-muted sm:text-2xl">
+        <p className="mt-5 text-xl text-muted sm:text-2xl">
           {site.role}
           <span aria-hidden className="mx-2.5 text-border">
             /
           </span>
-          <span className="text-muted">{site.location}</span>
+          <span>{site.location}</span>
         </p>
 
-        <p className="mt-8 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-muted sm:text-lg">
+        <p className="measure mt-8 text-pretty text-[1.0625rem] leading-relaxed text-muted sm:text-lg">
           {site.tagline}
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <ButtonLink href={site.resumeUrl} variant="primary" className="group">
             Resume
-            <ArrowUpRightInline />
+            <ArrowRight className="size-4 transition-transform duration-300 [transition-timing-function:var(--ease-soft)] group-hover:translate-x-0.5" />
           </ButtonLink>
           <ButtonLink href="#contact" variant="secondary">
             <Mail className="size-4" />
@@ -84,7 +89,7 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* Quiet wayfinding cue — it disappears the moment you start scrolling. */}
+      {/* Quiet wayfinding cue — it fades out the moment you start scrolling. */}
       <motion.a
         href="#about"
         style={prefersReducedMotion ? undefined : { opacity: washOpacity }}
@@ -94,12 +99,5 @@ export function Hero() {
         More about me
       </motion.a>
     </section>
-  );
-}
-
-/** Arrow that nudges on hover of the parent button. */
-function ArrowUpRightInline() {
-  return (
-    <ArrowRight className="size-4 transition-transform duration-300 [transition-timing-function:var(--ease-soft)] group-hover:translate-x-0.5" />
   );
 }

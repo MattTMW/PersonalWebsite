@@ -105,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <Nav />
 
-          <main id="main" className="mx-auto w-full max-w-3xl px-6 pb-16">
+          <main id="main" className="mx-auto w-full max-w-5xl px-6 pb-16 sm:px-8">
             {children}
             <Footer />
           </main>

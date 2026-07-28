@@ -11,7 +11,7 @@ import { coursework, skills } from "@/lib/content";
  */
 export function Skills() {
   return (
-    <Section id="skills" label="04 / Skills" title="What I work with">
+    <Section id="skills" index="04" label="Skills" title="What I work with">
       <dl className="divide-y divide-border border-y border-border">
         {skills.map((group, index) => (
           <Reveal key={group.group} delay={index * 0.05}>

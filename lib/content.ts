@@ -46,6 +46,9 @@ export const navItems = [
   { id: "contact", label: "Contact" },
 ] as const;
 
+/** Standalone routes, shown in the nav after the section links. */
+export const pages = [{ href: "/memories", label: "Memories" }] as const;
+
 /* -------------------------------------------------------------------------- */
 /* About                                                                       */
 /* -------------------------------------------------------------------------- */
