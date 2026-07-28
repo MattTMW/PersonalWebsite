@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* Class-based dark mode so next-themes can drive it (and the user can override the OS). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Semantic color tokens.
+   Light and dark are designed independently — dark is not an inversion.
+   The accent is used sparingly: focus rings, active nav, link underlines,
+   timeline nodes. Everything else is paper, ink, and gray.
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #ffffff;
+  --surface: #fbfdff; /* barely-there blue tint, keeps cards off pure white */
+  --surface-2: #f4f9fd;
+  --text: #111111;
+  --muted: #6b7280;
+  --border: #e6eef5;
+  --accent: #a7d8ff;
+  --accent-soft: #ddf2ff;
+  /* Accessible blue for text and icons — #A7D8FF alone fails AA on white. */
+  --accent-ink: #0f6fa8;
+  --card-shadow: 0 1px 2px rgb(17 17 17 / 0.04), 0 8px 24px -12px rgb(17 17 17 / 0.1);
+}
+
+.dark {
+  --bg: #0a0a0b;
+  --surface: #101215;
+  --surface-2: #16191d;
+  --text: #f5f7fa;
+  --muted: #9aa3af;
+  --border: #1e242b;
+  --accent: #8fcdff;
+  --accent-soft: #15222e;
+  --accent-ink: #a7d8ff;
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* One easing curve for every transition and animation on the site. */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Generates the `shadow-card` utility. */
+  --shadow-card: var(--card-shadow);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Clears the sticky nav when jumping to an anchor. */
+    scroll-padding-top: 7rem;
+    -webkit-text-size-adjust: 100%;
+    /* Set on <html> as well as <body>: overflow propagates from body to the
+       viewport, so clipping only on body leaves the document itself scrollable. */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    /* The hero's accent wash intentionally overhangs the right edge. `clip`
+       rather than `hidden` because `hidden` would create a scroll container
+       and break `position: sticky` on the nav. */
+    overflow-x: clip;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--text);
+  }
+
+  /* One consistent, high-visibility focus ring — WCAG 2.4.7 / 2.4.11. */
+  :focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Headings should never leave a single orphan word on the last line. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* The nav scrolls horizontally on narrow screens; the scrollbar itself would
+   be visual noise inside a floating pill. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* WCAG 2.3.3 — honor the OS "reduce motion" setting everywhere, including
+   smooth scrolling and every Framer Motion transition. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
