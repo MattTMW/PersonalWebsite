@@ -14,7 +14,7 @@ export function Projects() {
   const rest = projects.filter((project) => !project.featured);
 
   return (
-    <Section id="projects" index="02" label="Projects" title="Things I've built">
+    <Section id="projects" index="01" label="Projects" title="Things I've built">
       <div className="space-y-4">
         {featured.map((project, index) => (
           <Reveal key={project.title} delay={index * 0.06}>

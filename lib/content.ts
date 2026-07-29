@@ -38,25 +38,60 @@ export const social = {
 /* Navigation — order here drives both the nav pills and the scroll-spy.       */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Home-page sections. The home page is deliberately work-only — a recruiter
+ * lands on projects, not on preamble.
+ */
 export const navItems = [
-  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
   { id: "contact", label: "Contact" },
 ] as const;
 
-/** Standalone routes, shown in the nav after the section links. */
-export const pages = [{ href: "/memories", label: "Memories" }] as const;
+/**
+ * Standalone routes shown in the nav after the section links.
+ *
+ * Only About is promoted here — it's the word people hunt for. Memories and
+ * Uses are reachable from the About page instead of competing for nav space;
+ * anyone curious enough to open About is exactly who'd enjoy them.
+ */
+export const pages = [{ href: "/about", label: "About" }] as const;
+
+/** Personal pages, linked from /about rather than the main nav. */
+export const subPages = [
+  {
+    href: "/memories",
+    label: "Memories",
+    blurb: "Photos and the stories behind them — the parts that don't fit on a resume.",
+  },
+  {
+    href: "/uses",
+    label: "Uses",
+    blurb: "The tools I actually reach for, and how this site is put together.",
+  },
+] as const;
 
 /* -------------------------------------------------------------------------- */
 /* About                                                                       */
 /* -------------------------------------------------------------------------- */
 
-export const about = {
-  /** Each string renders as its own paragraph. Two or three is the sweet spot. */
+/**
+ * A paragraph is either plain text, or text with a margin note that appears
+ * beside it on wide screens (and stacks beneath it on narrow ones).
+ */
+export type AboutParagraph = string | { text: string; note?: string };
+
+export const about: {
+  paragraphs: AboutParagraph[];
+  facts: { label: string; value: string }[];
+} = {
+  /** Each entry renders as its own paragraph. Two or three is the sweet spot. */
   paragraphs: [
-    "I'm a computer science student at UC Irvine. Most of what I know I learned by shipping — building search engines that had to crawl real websites, CTF platforms that had to survive real students, and hackathon projects that had to work on stage.",
+    {
+      text: "I'm a computer science student at UC Irvine. Most of what I know I learned by shipping — building search engines that had to crawl real websites, CTF platforms that had to survive real students, and hackathon projects that had to work on stage.",
+      note: "Shipping to real users is a much stricter teacher than a grade is.",
+    },
     "I care about the unglamorous parts: the API that stays fast under load, the error message that tells you what to actually do, the codebase a teammate can pick up without a meeting. I'm drawn to applied AI and developer tooling, where those details compound.",
     "Right now I'm looking for a software engineering internship where I can work alongside people who are better than me.",
   ],
@@ -67,7 +102,7 @@ export const about = {
     { label: "Based in", value: "Irvine, California" },
     { label: "Status", value: "Open to Summer 2027 internships" }, // TODO
   ],
-} as const;
+};
 
 /* -------------------------------------------------------------------------- */
 /* Projects                                                                    */

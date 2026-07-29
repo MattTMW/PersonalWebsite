@@ -31,7 +31,7 @@ export default function MemoriesPage() {
             Memories
           </h1>
 
-          <p className="mt-6 text-[1.0625rem] leading-relaxed text-muted sm:text-lg">
+          <p className="prose-serif mt-6 text-muted">
             The parts that don&apos;t fit on a resume. Photos, half-finished projects, and the
             nights that taught me the most — kept here mostly so I don&apos;t forget them.
           </p>

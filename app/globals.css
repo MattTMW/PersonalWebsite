@@ -10,11 +10,16 @@
    timeline nodes. Everything else is paper, ink, and gray.
 --------------------------------------------------------------------------- */
 :root {
-  --bg: #ffffff;
-  --surface: #fbfdff; /* barely-there blue tint, keeps cards off pure white */
-  --surface-2: #f4f9fd;
+  /* Paper, not pure white. Pure #fff is what makes a minimal page read as a
+     blank document; a hair of warmth reads as a printed one. Cards then sit at
+     true white so they lift off the page instead of sinking into it. */
+  --bg: #fbfaf9;
+  --surface: #ffffff;
+  --surface-2: #f4f5f7;
   --text: #111111;
-  --muted: #6b7280;
+  /* Darkened from #6b7280 when the page moved off pure white: against the
+     warmer surfaces, the old value put 11px tag text at 4.43:1, under AA. */
+  --muted: #626875;
   --border: #e6eef5;
   --accent: #a7d8ff;
   --accent-soft: #ddf2ff;
@@ -49,6 +54,7 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-serif: var(--font-source-serif), ui-serif, Georgia, serif;
 
   /* One easing curve for every transition and animation on the site. */
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
@@ -123,6 +129,30 @@
    sweet spot. Only text gets this — cards and media break out past it. */
 @utility measure {
   max-width: 38rem;
+}
+
+/* Long-form reading text. Serif carries the paragraphs; Geist keeps every
+   structural role (headings, nav, labels, tags, buttons) so the page still
+   reads as a software portfolio rather than an essay. */
+@utility prose-serif {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  letter-spacing: 0.003em;
+}
+
+/* Dotted leader: label ········· value. A table-of-contents convention that
+   makes a plain list read like a printed index. The rule is its own flex item
+   so it absorbs whatever space the two labels leave. */
+@utility leader-rule {
+  flex: 1 1 auto;
+  min-width: 1.5rem;
+  align-self: center;
+  /* `--border` is tuned for panel edges and is far too faint to read as dots at
+     1px. Mixing toward `--muted` keeps it quiet but actually visible. */
+  border-bottom: 1px dotted color-mix(in srgb, var(--muted) 45%, transparent);
+  /* Nudged off the text baseline so it reads as a rule, not an underline. */
+  transform: translateY(0.15em);
 }
 
 @utility label {

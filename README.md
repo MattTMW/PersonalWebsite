@@ -22,10 +22,11 @@ npm run dev      # http://localhost:3000
 | Experience timeline | `experience` — newest first |
 | Skills | `skills` — append to a group's `items` |
 | Coursework | `coursework` — set to `[]` to hide the block |
-| Nav links and their order | `navItems` |
-| Extra pages in the nav | `pages` |
+| Home-page sections and their order | `navItems` |
+| Pages promoted to the nav | `pages` |
+| Pages linked from /about only | `subPages` |
 
-Memories live in their own file, [`lib/memories.ts`](lib/memories.ts).
+Memories live in [`lib/memories.ts`](lib/memories.ts); tools and colophon in [`lib/uses.ts`](lib/uses.ts).
 
 Entries marked `TODO` are placeholders — the experience section in particular is scaffolding, not real history.
 
@@ -76,6 +77,21 @@ something down before you've found the right picture for it.
 
 ---
 
+## Site structure
+
+```
+/            Hero → vitals strip → Projects → Experience → Skills → Contact
+/about       Long-form bio, plus the only links to Memories and Uses
+/memories    Scrapbook
+/uses        Tools + Colophon
+```
+
+The home page is **work only** — a recruiter lands on projects, not preamble. The long-form bio moved to `/about`, but the four vitals (Education · Focus · Based in · Status) stay on the home page as a slim strip under the hero: *B.S. Computer Science, UC Irvine* and *open to internships* are top-three facts for a student portfolio and shouldn't cost a click.
+
+Memories and Uses are reachable from `/about` rather than the nav. They're personality, not the pitch, and anyone curious enough to open About is exactly who'd enjoy them. Both are still in the sitemap — out of the nav is not the same as hidden from search.
+
+---
+
 ## Contact form
 
 The form works with no configuration: the API route replies `not_configured` and the client falls back to opening the visitor's mail client with the message prefilled.
@@ -101,18 +117,6 @@ The route calls Resend's REST API with `fetch`, so there's no SDK dependency. It
 - **One animation primitive.** [`Reveal`](components/motion/Reveal.tsx) — a 16px rise and fade, `once: true`. Reused everywhere so the page feels like one document.
 - **Dark mode is designed, not inverted.** The accent is brightened and desaturated for dark so it stays legible.
 
-## The Spider-Man easter egg
-
-[`components/easter-eggs/SpiderMan.tsx`](components/easter-eggs/SpiderMan.tsx) hangs a pixel-art sprite from a web in the hero's right-hand space. Click him for a swing and a thwip.
-
-- The sprite is an inline SVG built from a character-map string — no image asset, crisp at any scale, and editable by rewriting the rows.
-- The mask takes more than half the sprite. At ~26px a full body turns to mud; the big white eyes are the only feature that reads as Spider-Man at that size.
-- He sits at 45% opacity, full opacity on hover/focus. He should be something you notice, not a mascot.
-- The thwip is synthesised with the Web Audio API — no mp3 to ship or license — and only ever fires from a click.
-- Hidden below `sm`, and both the sway and the swing are disabled under `prefers-reduced-motion`.
-
-To remove him entirely, delete the `<SpiderMan />` line from [`components/sections/Hero.tsx`](components/sections/Hero.tsx).
-
 ## Accessibility
 
 Verified in-browser rather than assumed:
@@ -127,4 +131,4 @@ Verified in-browser rather than assumed:
 
 Push to GitHub and import the repo on [Vercel](https://vercel.com) — no configuration needed. Add the Resend environment variables in the project settings if you want form delivery.
 
-> **Note:** this folder currently has no `.git` of its own, so it belongs to the repo rooted at your home directory — which has no root `.gitignore` and contains `.ssh/`, `.claude.json` and shell history. Give the portfolio its own repo before pushing anything.
+The repo lives at [github.com/MattTMW/PersonalWebsite](https://github.com/MattTMW/PersonalWebsite).

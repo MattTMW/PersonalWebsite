@@ -34,7 +34,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
         <h3 className="text-[1.0625rem] font-semibold tracking-[-0.01em]">{title}</h3>
         <p className="mt-1.5 text-[0.9375rem] text-text/80">{summary}</p>
-        <p className="mt-3 text-sm leading-relaxed text-muted">{description}</p>
+        <p className="mt-3 font-serif text-[0.9375rem] leading-[1.65] text-muted">{description}</p>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-border bg-surface-2 px-6 py-4">

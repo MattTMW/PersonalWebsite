@@ -39,7 +39,7 @@ export function MemoryEntry({ memory, index }: { memory: Memory; index: number }
         >
           <MemoryMeta memory={memory} />
           <h2 className="text-xl font-semibold tracking-[-0.02em]">{memory.title}</h2>
-          <p className="mt-3 text-[1.0625rem] leading-[1.75] text-muted">{memory.story}</p>
+          <p className="prose-serif mt-3 text-muted">{memory.story}</p>
         </article>
       </Reveal>
     );
@@ -78,7 +78,7 @@ export function MemoryEntry({ memory, index }: { memory: Memory; index: number }
         <div className={cn(flipped && "md:order-1")}>
           <MemoryMeta memory={memory} />
           <h2 className="text-xl font-semibold tracking-[-0.02em]">{memory.title}</h2>
-          <p className="mt-3 text-[1.0625rem] leading-[1.75] text-muted">{memory.story}</p>
+          <p className="prose-serif mt-3 text-muted">{memory.story}</p>
         </div>
       </article>
     </Reveal>

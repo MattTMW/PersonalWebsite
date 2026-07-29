@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
 import { useRef } from "react";
-import { SpiderMan } from "@/components/easter-eggs/SpiderMan";
 import { ArrowDown, ArrowRight, Mail } from "@/components/ui/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { Sidenote, SidenoteAnchor } from "@/components/ui/Sidenote";
 import { about, site } from "@/lib/content";
 
 /**
@@ -40,10 +41,6 @@ export function Hero() {
         className="pointer-events-none absolute -top-24 -right-32 -z-10 size-[34rem] rounded-full bg-[radial-gradient(circle,var(--accent-soft)_0%,transparent_68%)] opacity-70 blur-2xl dark:opacity-40"
       />
 
-      {/* He hangs into the empty right-hand space — exactly the area the old
-          centred layout was wasting. Hidden on the narrowest screens, where
-          there's no spare room and he'd crowd the name. */}
-      <SpiderMan className="top-0 right-2 hidden sm:block lg:right-16" threadLength={64} />
 
       <motion.div
         data-reveal
@@ -73,9 +70,26 @@ export function Hero() {
           <span>{site.location}</span>
         </p>
 
-        <p className="measure mt-8 text-pretty text-[1.0625rem] leading-relaxed text-muted sm:text-lg">
-          {site.tagline}
-        </p>
+
+        {/* The way through to the personal side of the site lives in the margin
+            rather than the content flow — present next to the name without
+            interrupting the run from headline to pitch to buttons. */}
+        <SidenoteAnchor className="mt-8">
+          <p className="prose-serif measure text-pretty text-muted sm:text-[1.1875rem]">
+            {site.tagline}
+          </p>
+
+          <Sidenote>
+            Perhaps you want to{" "}
+            <Link
+              href="/about"
+              className="text-accent-ink underline decoration-border underline-offset-4 transition-colors duration-200 hover:decoration-accent-ink"
+            >
+              learn more about me
+            </Link>
+            ?
+          </Sidenote>
+        </SidenoteAnchor>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <ButtonLink href={site.resumeUrl} variant="primary" className="group">
@@ -89,14 +103,15 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* Quiet wayfinding cue — it fades out the moment you start scrolling. */}
+      {/* Quiet wayfinding cue — it fades out the moment you start scrolling.
+          Points at the work now that About has moved to its own page. */}
       <motion.a
-        href="#about"
+        href="#projects"
         style={prefersReducedMotion ? undefined : { opacity: washOpacity }}
-        className="group mt-20 hidden items-center gap-2 text-sm text-muted transition-colors duration-200 hover:text-text sm:inline-flex"
+        className="group mt-16 hidden items-center gap-2 text-sm text-muted transition-colors duration-200 hover:text-text sm:inline-flex"
       >
         <ArrowDown className="size-4 transition-transform duration-300 [transition-timing-function:var(--ease-soft)] group-hover:translate-y-0.5" />
-        More about me
+        See my work
       </motion.a>
     </section>
   );

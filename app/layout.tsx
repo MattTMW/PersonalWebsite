@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Source_Serif_4 } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { Footer } from "@/components/layout/Footer";
@@ -6,6 +7,23 @@ import { Nav } from "@/components/layout/Nav";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { site, social } from "@/lib/content";
 import "./globals.css";
+
+/**
+ * Serif for long-form reading only; Geist stays on everything structural.
+ * That split is most of what separates an editorial page from a templated one —
+ * and it's the same pairing kyswtn.com documents in its colophon.
+ *
+ * `optical-sizing` is on by default for variable fonts, which keeps the small
+ * sidenote text from looking spindly next to body copy.
+ */
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  // Named distinctly from the Tailwind `--font-serif` theme key it feeds —
+  // mapping a token onto itself in `@theme inline` is a circular reference.
+  variable: "--font-source-serif",
+  display: "swap",
+  style: ["normal", "italic"],
+});
 
 const description = `${site.role} based in ${site.location}. ${site.tagline}`;
 
@@ -74,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       // next-themes swaps this class before paint; suppress the expected
       // server/client mismatch on <html> only.
       suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${serif.variable}`}
     >
       <head>
         {/* Framer Motion server-renders each reveal's `initial` state as an
